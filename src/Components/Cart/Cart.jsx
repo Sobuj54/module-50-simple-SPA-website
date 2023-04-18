@@ -11,9 +11,9 @@ const Cart = (props) => {
     for(const product of cart){
 
         // one method
-        if(product.quantity === 0){
-            product.quantity = 1;
-        }
+        // if(product.quantity === 0){
+        //     product.quantity = 1;
+        // }
     //    another method
        // product.quantity = product.quantity || 1;
 
