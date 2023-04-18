@@ -39,6 +39,7 @@ const Shop = () => {
 
     const handleAddToCart = (product) => {
         let newCart = [...cart, product];
+        
         setCart(newCart);
         addToDb(product.id);
     }
