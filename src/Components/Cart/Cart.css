@@ -1,4 +1,16 @@
-.cart{
+.cart {
     background-color: rgba(255, 153, 0, 0.3);
     padding: 25px;
+}
+
+.btn-clear-cart {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    height: 56px;
+    font-size: 21px;
+    background: #FF3030;
+    border-radius: 4px;
+    color: white;
 }
