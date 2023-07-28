@@ -7,14 +7,26 @@ import {
   deleteShoppingCart,
   getShoppingCart,
 } from "../../utilities/fakedb";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
-
   const [cart, setCart] = useState([]);
+  const { totalProducts } = useLoaderData();
+
+  const itemsPerPage = 10; //todo make it
+  const totalPage = Math.ceil(totalProducts / itemsPerPage);
+
+  // const pageNumbers = [];
+  // for(let i=0; i<itemsPerPage; i++){
+  //   pageNumbers.push(i);
+  // }
+  // ------------
+  // OR another method
+  //------------
+  const pageNumbers = [...Array(totalPage).keys()];
 
   useEffect(() => {
     fetch("http://localhost:5000/products")
@@ -67,26 +79,34 @@ const Shop = () => {
   };
 
   return (
-    <div className="shop-container">
-      <div className="product-container">
-        {products.map((product) => (
-          <Product
-            key={product._id}
-            product={product}
-            handleAddToCart={handleAddToCart}></Product>
+    <>
+      <div className="shop-container">
+        <div className="product-container">
+          {products.map((product) => (
+            <Product
+              key={product._id}
+              product={product}
+              handleAddToCart={handleAddToCart}></Product>
+          ))}
+        </div>
+        <div className="cart-container">
+          <Cart cart={cart} clearCart={clearCart}>
+            <Link to="/order">
+              <button className="btn-proceed">
+                <span>Review Order</span>
+                <FontAwesomeIcon icon={faArrowRight} />
+              </button>
+            </Link>
+          </Cart>
+        </div>
+      </div>
+      {/* pagination */}
+      <div className="pagination">
+        {pageNumbers.map((number) => (
+          <button key={number}>{number}</button>
         ))}
       </div>
-      <div className="cart-container">
-        <Cart cart={cart} clearCart={clearCart}>
-          <Link to="/order">
-            <button className="btn-proceed">
-              <span>Review Order</span>
-              <FontAwesomeIcon icon={faArrowRight} />
-            </button>
-          </Link>
-        </Cart>
-      </div>
-    </div>
+    </>
   );
 };
 
